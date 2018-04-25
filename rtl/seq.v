@@ -56,7 +56,7 @@ module seq (/*AUTOARG*/
    assign inst_op_push = (inst_op == seq_op_push);
    assign inst_op_add  = (inst_op == seq_op_add);
    assign inst_op_send = (inst_op == seq_op_send);
-   assign int_op_mult  = (inst_op == seq_op_mult); //seq_op_mult is in the file seq_definitions
+   assign inst_op_mult  = (inst_op == seq_op_mult); //seq_op_mult is in the file seq_definitions
 
    // ===========================================================================
    // Register File
