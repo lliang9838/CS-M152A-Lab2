@@ -22,7 +22,7 @@ module model_uart(/*AUTOARG*/
    reg       TX;
 
    //idea, let's make a buffer, and flushes when we see a carriage return
-   reg [63:0] buff; 
+   reg [39:0] buff = 0; //let's initially set it to zero, let's set buff to 40 bits, bc we only want to output 4 bytes + 1 byte for the newline
 
    initial
      begin
@@ -41,13 +41,13 @@ module model_uart(/*AUTOARG*/
           end
         ->evByte; //each byte is 8 bits, let's wait until we get 4 bytes first or 16 bits and then output
           //let's left shift to make room
-          buff = buff << 8; //left shift by 8 bits to make room for the next byte
-          buff = {buff, rxData};
+          buff = buff << 8; //left shift by 8 bits to make room for the next byte, shift by 8 bc 8 bits per byte
+          buff = {buff, rxData}; //concatenates buff with rxData
 
-          if ( rxData == 4'h0D) //we only output when we see a carriage return, then we reset buffer to 0
+          if ( rxData == 4'h0D) //we only output when we see a carriage return, then we reset buffer to 0, carriage return in verilog is 0x0D
           begin
               $display("Nicer UART output: %s", buff);
-              buff = 0;
+              buff = 0; //reset buffer to 0
           end
 
 
