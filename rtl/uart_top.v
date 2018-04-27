@@ -44,6 +44,8 @@ module uart_top (/*AUTOARG*/
    reg [2:0]               state;
 
    assign o_tx_busy = (state!=stIdle);
+
+   //state transition diagram?
    
    always @ (posedge clk)
      if (rst)
@@ -53,7 +55,7 @@ module uart_top (/*AUTOARG*/
          stIdle:
            if (i_tx_stb)
              begin
-                state   <= stNib1;
+                state   <= stNib1; //wtf is stNib1
                 tx_data <= i_tx_data;
              end
          stCR:
