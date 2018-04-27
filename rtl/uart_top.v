@@ -13,6 +13,8 @@ module uart_top (/*AUTOARG*/
    output                   o_tx_busy;
    output [7:0]             o_rx_data;
    output                   o_rx_valid;
+
+   input [1:0]              register; //Code that I added, a 2 bit register
    
    input [seq_dp_width-1:0] i_tx_data;
    input                    i_tx_stb;
@@ -22,6 +24,8 @@ module uart_top (/*AUTOARG*/
 
    parameter stIdle = 0;
    parameter stNib1 = 1;
+   parameter stR;
+   parameter stNum
    parameter stNL   = uart_num_nib+1;
    parameter stCR   = uart_num_nib+2;
    
@@ -62,7 +66,7 @@ module uart_top (/*AUTOARG*/
              end
        endcase // case (state)
 
-   function [7:0] fnNib2ASCII;
+   function [7:0] fnNib2ASCII; //function that that converts to ASCIIHEX
       input [3:0] din;
       begin
          case (din)

@@ -16,6 +16,9 @@ module nexys3 (/*AUTOARG*/
    output [7:0] led;
    input        btnS;                 // single-step instruction
    input        btnR;                 // arst
+
+  //notice that only when we call the send instruction, then we see the output on putty
+   wire register = [5:4] sw; //from the diagram, we see that from bit 4-5 gives us the register #(0-3)
    
    // Logic
    input        clk;                  // 100MHz
@@ -138,6 +141,7 @@ module nexys3 (/*AUTOARG*/
                        .o_rx_data       (uart_rx_data[7:0]),
                        .o_rx_valid      (uart_rx_valid),
                        // Inputs
+                       .register        (register), //Leslie added this line
                        .i_rx            (RsRx),
                        .i_tx_data       (seq_tx_data[seq_dp_width-1:0]),
                        .i_tx_stb        (seq_tx_valid),
