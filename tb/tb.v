@@ -6,9 +6,14 @@ module tb;
    reg       clk;
    reg       btnS;
    reg       btnR;
+
+   reg [7:0] curr; //0-7 bc 8 bits in an instruction
+   reg [7:0] mem [1023:0]; //1024 possible instructions
    
+
    integer   i;
-   
+   integer length;
+
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire                 RsRx;                   // From model_uart0_ of model_uart.v
@@ -26,17 +31,18 @@ module tb;
         btnS = 0;
         #1000 btnR = 0;
         #1500000;
-        
-        tskRunPUSH(0,4);
-        tskRunPUSH(0,0);
-        tskRunPUSH(1,3);
-        tskRunMULT(0,1,2);
-        tskRunADD(2,0,3);
-        tskRunSEND(0);
-        tskRunSEND(1);
-        tskRunSEND(2);
-        tskRunSEND(3);
-        
+
+      //using readmemb and storing what we read in an array
+       $readmemb("filelocation/fibonacci.code", mem);
+       length = mem[0]; //from the spec, the first element indicates how many lines
+
+       i = 1;
+       while( i < length +1 ) //+1 to length to account for last element
+       {
+         tskRunInst(mem[i]);
+         i = i+1;
+       }
+
         #1000;        
         $finish;
      end

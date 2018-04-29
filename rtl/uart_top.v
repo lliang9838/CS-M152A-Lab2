@@ -1,6 +1,6 @@
 module uart_top (/*AUTOARG*/
    // Outputs
-   o_tx, o_tx_busy, o_rx_data, o_rx_valid,
+   o_tx, o_tx_busy, o_rx_data, o_rx_valid, register,
    // Inputs
    i_rx, i_tx_data, i_tx_stb, clk, rst
    );
@@ -25,7 +25,7 @@ module uart_top (/*AUTOARG*/
    parameter stIdle = 0;
    parameter stNib1 = 1;
    parameter stR;
-   parameter stNum
+   parameter stNum;
    parameter stNL   = uart_num_nib+1;
    parameter stCR   = uart_num_nib+2;
    

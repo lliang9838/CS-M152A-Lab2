@@ -18,7 +18,8 @@ module nexys3 (/*AUTOARG*/
    input        btnR;                 // arst
 
   //notice that only when we call the send instruction, then we see the output on putty
-   wire register = [5:4] sw; //from the diagram, we see that from bit 4-5 gives us the register #(0-3)
+   wire [1:0] register;
+   register = [5:4] sw; //from the diagram, we see that from bit 4-5 gives us the register #(0-3)
    
    // Logic
    input        clk;                  // 100MHz
